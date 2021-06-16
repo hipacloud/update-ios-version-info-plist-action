@@ -27,6 +27,8 @@ const core = __importStar(__nccwpck_require__(127));
 const exec = __importStar(__nccwpck_require__(49));
 const fs = __importStar(__nccwpck_require__(747));
 const plist = __importStar(__nccwpck_require__(757));
+const path = require('path');
+	
 process.on('unhandledRejection', handleError);
 main().catch(handleError);
 function main() {
@@ -53,7 +55,8 @@ function main() {
                 core.info('Before update:');
                 yield exec.exec('cat', [infoPlistPath]);
             }
-            let fileContent = fs.readFileSync(infoPlistPath, { encoding: 'utf8' });
+		console.log('__dir_name', __dir_name)
+            let fileContent = fs.readFileSync(path.resolve(__dir_name, infoPlistPath), { encoding: 'utf8' });
             core.debug(JSON.stringify(fileContent));
             let obj = plist.parse(fileContent);
             obj['CFBundleShortVersionString'] = bundleShortVersionString;
